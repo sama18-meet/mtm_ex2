@@ -1,4 +1,3 @@
-typedef int T;
 
 template <class T>
 struct Node {
@@ -36,6 +35,7 @@ private:
     const SortedList<T>* sorted_list;
     int index;
     Iterator(const SortedList<T>* sorted_list, int index);
+    Node<T> getNode();
     friend class SortedList;
 
 public:
