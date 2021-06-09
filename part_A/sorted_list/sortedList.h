@@ -1,4 +1,3 @@
-
 typedef int T;
 
 template <class T>
@@ -11,7 +10,7 @@ struct Node {
 template <class T>
 class SortedList {
 private:
-    <T>Node* first_node;
+    Node<T>* first_node;
     int size;
 
 public:
@@ -19,21 +18,24 @@ public:
     ~SortedList();
     SortedList(const SortedList&);
     SortedList& operator=(const SortedList&); 
-    void insert(const T& element);
-    void remove // continue
-    int length();
 
     class Iterator;
-    const_iterator begin() const;
-    const_iterator end() const;
+    Iterator begin() const;
+    Iterator end() const;
 
-}
+    void insert(const T& element);
+    void remove(Iterator it);
+    int length();
 
-class SortedList::Iterator {
+};
+
+
+template <class T>
+class SortedList<T>::Iterator {
 private:
-    const SortedList* sorted_list;
+    const SortedList<T>* sorted_list;
     int index;
-    Iterator(const SortedList* sorted_list, int index);
+    Iterator(const SortedList<T>* sorted_list, int index);
     friend class SortedList;
 
 public:
@@ -44,4 +46,4 @@ public:
     bool operator==(const Iterator&) const;
     const T& operator*();
 
-}
+};
