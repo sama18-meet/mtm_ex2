@@ -87,6 +87,8 @@ void example1() {
 
     mtm::Team winning_team = mtm::Team::CROSSFITTERS;
     assert(g1.isOver(&winning_team) == false);
+    std::cout << "isOver: " <<  g1.isOver(&winning_team) << std::endl;
+    std::cout << "is powerlifters the winning team?: " <<  (winning_team == mtm::Team::POWERLIFTERS) << std::endl;
 
     g1.reload(GridPoint(3,4));
     g1.attack(GridPoint(3,4), GridPoint(6,4)); // now can shoot
@@ -102,6 +104,8 @@ void example1() {
 
     assert(g1.isOver(&winning_team) == true);
     assert(winning_team == mtm::Team::POWERLIFTERS);
+    std::cout << "isOver: " <<  g1.isOver(&winning_team) << std::endl;
+    std::cout << "is powerlifters the winning team?: " <<  (winning_team == mtm::Team::POWERLIFTERS) << std::endl;
 }
 
 void example2() {

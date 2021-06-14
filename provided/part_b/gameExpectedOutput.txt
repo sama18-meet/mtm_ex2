@@ -67,7 +67,7 @@ A game related error has occurred: CellEmpty
 A game related error has occurred: OutOfAmmo
 A game related error has occurred: IllegalTarget
 isOver: 0
-is cpp the winning team? 0
+is powerlifters the winning team?: 0
 *****************
 | | | | | | | | |
 | | |M| | | | | |
@@ -80,7 +80,7 @@ is cpp the winning team? 0
 *****************
 A game related error has occurred: CellEmpty
 isOver: 1
-is cpp the winning team? 1
+is powerlifters the winning team?: 1
 ------example 2------
 *********************
 | | | | | | | | | | |
