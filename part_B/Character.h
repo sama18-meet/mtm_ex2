@@ -1,3 +1,6 @@
+#ifndef _CHARACTER_H
+#define _CHARACTER_H
+
 #include <memory>
 
 #include <Auxiliaries.h>
@@ -28,5 +31,12 @@ public:
     ~Character() = default;
     Character(const Character&) = default;
     Character& operator=(const Character&) = default;
+    mtm::Team getTeam();
+    mtm::units_t getHealth();
+    mtm::units_t getAmmo();
+    mtm::units_t getRange();
+    mtm::units_t getPower();
+    mtm::GridPint getCoordinates();
     clone();
 }
+#endif
