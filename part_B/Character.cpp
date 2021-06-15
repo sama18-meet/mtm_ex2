@@ -25,7 +25,11 @@ units_t Character::getPower() {
     return this->power;
 }
 
-GridPoint Character::getCoordinates() {
+void Character::increaseHealth(units_t amount) {
+    health += amount; 
+}
+
+const GridPoint& Character::getCoordinates() {
     return this->coordinates;
 }
 bool Character::canMove(const GridPoint& src, const GridPoint& dst){

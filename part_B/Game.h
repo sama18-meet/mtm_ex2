@@ -13,7 +13,7 @@ private:
     int height;
     int width;
     char* grid;
-    vector<CharacterCoordinates> grid_state;
+    vector<shared_ptr<Character>> grid_state;
 
 
 private:

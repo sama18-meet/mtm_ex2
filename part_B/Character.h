@@ -27,8 +27,8 @@ protected:
     virtual bool attackInRange(mtm::GridPoint dst_grid_point) = 0;
     virtual bool enoughAmmo(cell_content_t dst_character_team) = 0;
     virtual bool legalTarget(cell_content_t dst_character_team) = 0;
-    // virtual void updateAmmo(std::shared_ptr<Character> target) = 0;
-    // virtual void updateTargetsHealth(std::vector<Character> characters) = 0;
+    virtual void updateAmmo(std::shared_ptr<Character> target) = 0;
+    virtual void updateTargetsHealth(const mtm::GridPoint& dst, std::vector<Character> characters) = 0;
     void reload();
 
 public:
@@ -41,7 +41,8 @@ public:
     mtm::units_t getAmmo();
     mtm::units_t getRange();
     mtm::units_t getPower();
-    mtm::GridPoint getCoordinates();
+    const mtm::GridPoint& getCoordinates();
+    void increaseHealth(mtm::units_t amount);
     // clone();
 };
 #endif

@@ -1,6 +1,7 @@
 #include "Soldier.h"
 
 using namespace mtm;
+using std::shared_ptr;
 
 Soldier::Soldier(Team team, units_t health, units_t ammo, units_t range, units_t power, GridPoint coordinates) :
                     Character(team, health, ammo, range, power, coordinates) {
@@ -24,4 +25,26 @@ bool Soldier::enoughAmmo(cell_content_t dst_team) {
 
 bool Soldier::legalTarget(cell_content_t dst_team) {
     return true;
+}
+
+
+void Soldier::updateAmmo(std::shared_ptr<Character> target) {
+    ammo -= SOLDIER_ATTACK_COST;
+}
+
+
+void Soldier::updateTargetsHealth(const GridPoint& dst, std::vector<shared_ptr<Character>> characters) {
+    for (shared_ptr<Character> curr_character : characters) {
+        if (curr_character->getTeam() == team) {
+            continue;
+        }
+        int distance = GridPoint::distance(curr_character->getCoordinates(), coordinates);
+        if (distance == 0) {
+            curr_character->increaseHealth(-power);
+            continue;
+        }
+        if (distance <= range/3 + 1) {
+            curr_character->increaseHealth(-(power/2 + 1));
+        }
+    }
 }
