@@ -8,6 +8,7 @@ class Soldier: public Character {
 private:
     bool enoughAmmo(cell_content_t dst_team) override;
     bool attackInRange(mtm::GridPoint dst_grid_point);
+    bool legalTarget(cell_content_t dst_team);
 public:
     Soldier(mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power, mtm::GridPoint coordinates);
 };

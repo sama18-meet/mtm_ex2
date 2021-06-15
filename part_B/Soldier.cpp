@@ -22,6 +22,6 @@ bool Soldier::enoughAmmo(cell_content_t dst_team) {
     return ammo >= 1;
 }
 
-bool legalTarget(cell_content_t dst_team) {
+bool Soldier::legalTarget(cell_content_t dst_team) {
     return true;
 }

@@ -1,6 +1,5 @@
 #include "Character.h"
 
-#define EMPTY_CELL -1
 #define UNDEFINED -1
 
 using std::shared_ptr;

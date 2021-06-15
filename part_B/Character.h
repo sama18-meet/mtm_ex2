@@ -5,6 +5,8 @@
 #include <vector>
 #include "Auxiliaries.h"
 
+#define EMPTY_CELL -1
+
 typedef int cell_content_t;
 // abstract class
 
