@@ -6,8 +6,8 @@
 
 class Soldier: public Character {
 private:
-    const int motion_range;
-    const int load_addition;
+    bool enoughAmmo(mtm::Team dst_team) override;
+    bool attackInRange(mtm::GridPoint dst_grid_point);
 public:
-    Soldier(Team team, units_t health, units_t ammo, units_t range, units_t power, GridPoint coordinates);
+    Soldier(mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power, mtm::GridPoint coordinates);
 };
