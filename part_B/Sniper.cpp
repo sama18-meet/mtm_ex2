@@ -1,19 +1,23 @@
+#include "Sniper.h"
 
-bool Sniper::attackInRange(GridPoint src_grid_point, GridPoint dst_grid_point) override {
-    int distance = GridPoint::distance(src_grid_point, dst_grid_point);
+using namespace mtm;
+
+bool Sniper::attackInRange(GridPoint dst_grid_point) override {
+    int distance = GridPoint::distance(coordinates, dst_grid_point);
     if (distance > range || distance < (range/2 + 1)) {
         return false;
     }
+    return true;
 }
 
 
-bool Sniper::isOutOfAmmo(CharacterCoordinates dst_character_coordinates) override {
-    return ammo < 1;
+bool Sniper::enoughAmmo(Team dst_team) override {
+    return ammo >= 1;
 }
 
 
-bool Sniper::legalTarget(CharacterCoordinates dst_character_coordinates) override {
-    if (dst_character_coordinates->character->team == this->team) {
+bool Sniper::legalTarget(Team dst_team) override {
+    if (dst_team == this->team) {
         return false;
     }
     return true;
