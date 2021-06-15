@@ -27,6 +27,16 @@ units_t Character::getPower(){
 GridPoint Character::getCoordinates(){
     return this->coordinates;
 }
+bool Character::canMove(const GridPoint& src, const GridPoint& dst){
+    if (distance(src, dst) <= motion_range) {
+        return true;
+    }
+    return false;
+}
+
+void Character::reload(){
+    ammo += load_addition;
+}
 
 bool Character::canAttack(shared_ptr<Character> dst_character, shared_ptr<GridPoint> dst_coordinates) {
     Team dst_team;
