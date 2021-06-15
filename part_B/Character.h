@@ -5,7 +5,7 @@
 #include <vector>
 #include "Auxiliaries.h"
 
-
+typedef int cell_content_t;
 // abstract class
 
 class Character {
@@ -16,15 +16,15 @@ protected:
     mtm::units_t range;
     mtm::units_t power;
     mtm::GridPoint coordinates;
-    const mtm::units_t motion_range;
-    const mtm::units_t load_addition;
+    mtm::units_t motion_range;
+    mtm::units_t load_addition;
 
 protected:
     bool canMove(const mtm::GridPoint& src, const mtm::GridPoint& dst);
     bool canAttack(std::shared_ptr<Character> dst_character, mtm::GridPoint dst_coordinates);
     virtual bool attackInRange(mtm::GridPoint dst_grid_point) = 0;
-    virtual bool enoughAmmo(mtm::Team dst_character_team) = 0;
-    virtual bool legalTarget(mtm::Team dst_character_team) = 0;
+    virtual bool enoughAmmo(cell_content_t dst_character_team) = 0;
+    virtual bool legalTarget(cell_content_t dst_character_team) = 0;
     // virtual void updateAmmo(std::shared_ptr<Character> target) = 0;
     // virtual void updateTargetsHealth(std::vector<Character> characters) = 0;
     void reload();

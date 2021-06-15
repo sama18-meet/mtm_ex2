@@ -41,14 +41,14 @@ void Character::reload(){
 }
 
 bool Character::canAttack(shared_ptr<Character> dst_character, GridPoint dst_coordinates) {
-    Team dst_team;
+    cell_content_t dst_team;
     GridPoint dst_grid_point(UNDEFINED, UNDEFINED);
     if(dst_character == nullptr) {
         dst_team = EMPTY_CELL;
         dst_grid_point = dst_coordinates;
     }
     else {
-        dst_team = dst_character->getTeam();
+        dst_team = static_cast<cell_content_t>(dst_character->getTeam());
         dst_grid_point = dst_character->getCoordinates();
     }
     if (!attackInRange(dst_grid_point) || !enoughAmmo(dst_team) || !legalTarget(dst_team))
