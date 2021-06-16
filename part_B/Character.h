@@ -22,27 +22,27 @@ protected:
     mtm::units_t load_addition;
 
 protected:
-    bool canMove(const mtm::GridPoint& src, const mtm::GridPoint& dst);
-    bool canAttack(std::shared_ptr<Character> dst_character, mtm::GridPoint dst_coordinates);
-    virtual bool attackInRange(mtm::GridPoint dst_grid_point) = 0;
-    virtual bool enoughAmmo(cell_content_t dst_character_team) = 0;
-    virtual bool legalTarget(cell_content_t dst_character_team) = 0;
+    bool canMove(const mtm::GridPoint& src, const mtm::GridPoint& dst) const;
+    bool canAttack(std::shared_ptr<Character> dst_character, const mtm::GridPoint& dst_coordinates) const;
+    virtual bool attackInRange(const mtm::GridPoint& dst_grid_point) const = 0;
+    virtual bool enoughAmmo(cell_content_t dst_character_team) const = 0;
+    virtual bool legalTarget(cell_content_t dst_character_team) const = 0;
     virtual void updateAmmo(std::shared_ptr<Character> target) = 0;
-    virtual void updateTargetsHealth(const mtm::GridPoint& dst, std::vector<Character> characters) = 0;
+    virtual void updateTargetsHealth(const mtm::GridPoint& dst, std::vector<std::shared_ptr<Character>> characters) = 0;
     void reload();
 
 public:
-    Character(mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power, mtm::GridPoint coordinates);
+    Character(mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power);
     ~Character() = default;
     Character(const Character&) = default;
     Character& operator=(const Character&) = default;
-    mtm::Team getTeam();
-    mtm::units_t getHealth();
-    mtm::units_t getAmmo();
-    mtm::units_t getRange();
-    mtm::units_t getPower();
-    const mtm::GridPoint& getCoordinates();
+    mtm::Team getTeam() const;
+    mtm::units_t getHealth() const;
+    mtm::units_t getAmmo() const;
+    mtm::units_t getRange() const;
+    mtm::units_t getPower() const;
+    const mtm::GridPoint& getCoordinates() const;
     void increaseHealth(mtm::units_t amount);
-    // clone();
+    virtual Character* clone() const = 0;
 };
 #endif

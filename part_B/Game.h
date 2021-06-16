@@ -1,36 +1,31 @@
-#include "Auxiliaries.h"
 #include <memory>
-
-
+#include <vector>
+#include "Auxiliaries.h"
+#include "Character.h"
 
 class Game {
 private:
-    struct CharacterCoordinates_t {
-        std::shared_ptr<GridPoint> grid_point;
-        std::shared_ptr<Character> character;
-    } std::shared_ptr<CharacterCoordinates>;
-
     int height;
     int width;
     char* grid;
-    vector<shared_ptr<Character>> grid_state;
+    std::vector<std::shared_ptr<Character>> characters_vec;
 
 
 private:
-    bool legalCell(const GridPoint&, grid_point);
-    bool cellOccupied(const GridPoint& grid_point);
+    bool legalCell(const mtm::GridPoint& grid_point);
+    bool cellOccupied(const mtm::GridPoint& grid_point);
+    char getCharacterTypeChar(Character*);
 
 public: // ?
     Game(int height, int width);
     ~Game();
     Game(const Game& other);
     Game& operator=(const Game& other);
-    void addCharacter(const GridPoint& coordinates, std::shared_ptr<Character> character);
-    static std::shared_ptr<Character> makeCharacter(CharacterType type, Team team, units_t health,
-    void move(const GridPoint & src_coordinates, const GridPoint & dst_coordinates);
-    void attack(const GridPoint & src_coordinates, const GridPoint & dst_coordinates);
-    void reload(const GridPoint & coordinates);
-    std::ostream& operator<<(std::ostream& os, const char* grid);
-    bool isOver(Team* winningTeam=NULL) const;
-
-}
+    void addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Character> character);
+    static std::shared_ptr<Character> makeCharacter(mtm::CharacterType type, mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power);
+    void move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates);
+    void attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates);
+    void reload(const mtm::GridPoint & coordinates);
+    bool isOver(mtm::Team* winningTeam=NULL) const;
+    friend std::ostream& operator<<(std::ostream& os, const char* grid);
+};

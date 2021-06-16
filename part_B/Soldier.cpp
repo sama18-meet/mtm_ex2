@@ -3,13 +3,13 @@
 using namespace mtm;
 using std::shared_ptr;
 
-Soldier::Soldier(Team team, units_t health, units_t ammo, units_t range, units_t power, GridPoint coordinates) :
-                    Character(team, health, ammo, range, power, coordinates) {
+Soldier::Soldier(Team team, units_t health, units_t ammo, units_t range, units_t power) :
+                    Character(team, health, ammo, range, power) {
     motion_range = SOLDIER_MOTION_RANGE;
     load_addition = SOLDIER_LOAD_ADDITION;
 }
 
-bool Soldier::attackInRange(GridPoint dst_grid_point) {
+bool Soldier::attackInRange(const GridPoint& dst_grid_point) const {
     if (GridPoint::distance(coordinates, dst_grid_point) > range) {
         return false;
     }
@@ -19,11 +19,11 @@ bool Soldier::attackInRange(GridPoint dst_grid_point) {
     return true;
 }
 
-bool Soldier::enoughAmmo(cell_content_t dst_team) {
+bool Soldier::enoughAmmo(cell_content_t dst_team) const {
     return ammo >= 1;
 }
 
-bool Soldier::legalTarget(cell_content_t dst_team) {
+bool Soldier::legalTarget(cell_content_t dst_team) const {
     return true;
 }
 
@@ -47,4 +47,9 @@ void Soldier::updateTargetsHealth(const GridPoint& dst, std::vector<shared_ptr<C
             curr_character->increaseHealth(-(power/2 + 1));
         }
     }
+}
+
+
+Character* Soldier::clone() const {
+    return new Soldier(*this);
 }
