@@ -28,5 +28,5 @@ public: // ?
     void attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates);
     void reload(const mtm::GridPoint & coordinates);
     bool isOver(mtm::Team* winningTeam=NULL) const;
-    friend std::ostream& operator<<(std::ostream& os, const char* grid);
+    friend std::ostream& operator<<(std::ostream& os, const Game& game);
 };
