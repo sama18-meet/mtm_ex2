@@ -31,31 +31,31 @@ public:
     template <class function>
     SortedList apply(function func);
 
-    class Iterator;
-    Iterator begin() const;
-    Iterator end() const;
+    class const_iterator;
+    const_iterator begin() const;
+    const_iterator end() const;
 
     void insert(const T& element);
-    void remove(Iterator it);
+    void remove(const_iterator it);
     int length() const;
 };
 
 
 template <class T>
-class SortedList<T>::Iterator {
+class SortedList<T>::const_iterator {
 private:
     const SortedList<T>* sorted_list;
     int index;
-    Iterator(const SortedList<T>* sorted_list, int index);
+    const_iterator(const SortedList<T>* sorted_list, int index);
     Node* getNodePtr();
     friend class SortedList;
 
 public:
-    Iterator(const Iterator&) = default;
-    Iterator& operator=(const Iterator&) = default;
-    ~Iterator() = default;
-    Iterator& operator++();
-    bool operator==(const Iterator&) const;
+    const_iterator(const const_iterator&) = default;
+    const_iterator& operator=(const const_iterator&) = default;
+    ~const_iterator() = default;
+    const_iterator& operator++();
+    bool operator==(const const_iterator&) const;
     const T& operator*();
 };
 
@@ -65,7 +65,7 @@ template <class T>
 template <class Predicate>
 SortedList<T> SortedList<T>::filter(Predicate function){
     SortedList sorted_list_filter= SortedList();
-    for(Iterator i=this.begin(); i!=this.end(); ++i){
+    for(const_iterator i=this.begin(); i!=this.end(); ++i){
         if(function(*i)){
             sorted_list_filter.insert(*i);
         }
@@ -78,7 +78,7 @@ template <class T>
 template <class function>
 SortedList<T> SortedList<T>::apply(function func) {
     SortedList sorted_list_apply= SortedList();
-    for(Iterator i = this->begin(); (!(i==this->end())); ++i){
+    for(const_iterator i = this->begin(); (!(i==this->end())); ++i){
         T returned_value=func(*i);
         sorted_list_apply.insert(returned_value);
     }
@@ -86,14 +86,14 @@ SortedList<T> SortedList<T>::apply(function func) {
 }
 
 
-///////////////////// ITERATOR ///////////////////
+///////////////////// const_iterator ///////////////////
 template <class T>
-SortedList<T>::Iterator::Iterator(const SortedList* sorted_list, int index) :
+SortedList<T>::const_iterator::const_iterator(const SortedList* sorted_list, int index) :
     sorted_list(sorted_list), index(index) {}
 
 
 template <class T>
-typename SortedList<T>::Node* SortedList<T>::Iterator::getNodePtr() {
+typename SortedList<T>::Node* SortedList<T>::const_iterator::getNodePtr() {
     Node* current_node = this->sorted_list->first_node;
     for (int j=0; j<this->index; j++) {
         current_node = current_node->next; 
@@ -102,7 +102,7 @@ typename SortedList<T>::Node* SortedList<T>::Iterator::getNodePtr() {
 }
 
 template <class T>
-typename SortedList<T>::Iterator& SortedList<T>::Iterator::operator++() {
+typename SortedList<T>::const_iterator& SortedList<T>::const_iterator::operator++() {
     if (this->index > this->sorted_list->len) { 
         throw std::out_of_range("bla");
     }
@@ -111,19 +111,19 @@ typename SortedList<T>::Iterator& SortedList<T>::Iterator::operator++() {
 }
 
 template <class T>
-bool SortedList<T>::Iterator::operator==(const SortedList::Iterator& it) const {
+bool SortedList<T>::const_iterator::operator==(const SortedList::const_iterator& it) const {
     return this->index == it.index;
 }
 
 template <class T>
-const T& SortedList<T>::Iterator::operator*() {
+const T& SortedList<T>::const_iterator::operator*() {
     return this->getNodePtr()->item;
 }
 
 ///////////////////////////////////////////////////////////////////
 template <class T>
 SortedList<T>& SortedList<T>::concatinate_list(const SortedList<T>& list2) {
-    Iterator i = list2.begin();
+    const_iterator i = list2.begin();
     while(!(i==list2.end())){ 
         this->insert(*i);
         ++i;
@@ -135,7 +135,7 @@ SortedList<T>& SortedList<T>::concatinate_list(const SortedList<T>& list2) {
 template <class T>
 void SortedList<T>::clear() {
     while (this->len>0) {
-        this->remove(Iterator(this, ((this->len)-1)));
+        this->remove(const_iterator(this, ((this->len)-1)));
     }
 }
 
@@ -166,25 +166,25 @@ SortedList<T>& SortedList<T>::operator=(const SortedList<T>& sorted_list_origina
 }
 
 template <class T>
-typename SortedList<T>::Iterator SortedList<T>::begin() const {
-    return Iterator(this, 0);
+typename SortedList<T>::const_iterator SortedList<T>::begin() const {
+    return const_iterator(this, 0);
 }
 
 template <class T>
-typename SortedList<T>::Iterator SortedList<T>::end() const {
-    return Iterator(this, (this->len));
+typename SortedList<T>::const_iterator SortedList<T>::end() const {
+    return const_iterator(this, (this->len));
 }
 
 
 template <class T>
-void SortedList<T>::remove(Iterator it) {
+void SortedList<T>::remove(const_iterator it) {
     this->len--;
     Node* node =  it.getNodePtr();
     if (node == this->first_node) {
         this->first_node = node->next; 
     }   
       else { 
-        Iterator(this, it.index-1).getNodePtr()->next = node->next;
+        const_iterator(this, it.index-1).getNodePtr()->next = node->next;
       }
       delete node;
 }
@@ -207,7 +207,7 @@ void SortedList<T>::insert(const T& element) {
         return;
     }
 
-    Iterator i = this->begin();
+    const_iterator i = this->begin();
     for(int counter=0; counter<len; counter++) {
 
         if (element < *i) {
@@ -218,7 +218,7 @@ void SortedList<T>::insert(const T& element) {
                 return;
             }
             new_node->next = i.getNodePtr();
-            Iterator(this, i.index-1).getNodePtr()->next = new_node;
+            const_iterator(this, i.index-1).getNodePtr()->next = new_node;
             return;
         }
         if (!(counter==len-1)) { 
