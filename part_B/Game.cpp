@@ -115,6 +115,17 @@ void Game::move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & d
     src_character->updateCoordinates(dst_coordinates);
 }
 
+bool Game::legalCell(const mtm::GridPoint& grid_point){
+    if(grid_point.row>=0 && grid_point.row<width && grid_point.col>=0 && grid_point.col<height) {
+        return true;
+    }
+    return false; 
+}
+
+bool Game::cellOccupied(const mtm::GridPoint& grid_point){
+    return getCharacterByCoordinates(grid_point)!=nullptr;
+}
+
 
 bool Game::isOver(Team* winningTeam) const {
     if (characters_vec.size()==0) {
