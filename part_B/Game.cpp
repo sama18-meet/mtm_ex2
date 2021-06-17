@@ -5,6 +5,7 @@
 #include "Soldier.h"
 #include "Medic.h"
 #include "Sniper.h"
+#include "Exceptions.h"
 
 using namespace mtm;
 using std::shared_ptr;
@@ -18,6 +19,7 @@ Game::Game(int height, int width) {
     width = width;
     grid = new char[height*width]; 
     memset(grid, ' ', height*width);
+    characters_vec = std::vector<shared_ptr<Character>>();
 }
 
 Game::~Game() {
@@ -52,6 +54,15 @@ char getCharacterTypeChar(Character* character) {
 }
 
 
+shared_ptr<Character> Game::getCharacterByCoordinates(const GridPoint& grid_point) {
+    for (shared_ptr<Character> curr_character : characters_vec) {
+        if (curr_character->getCoordinates() == grid_point) {
+            return curr_character; 
+        }
+    }
+    return nullptr;
+}
+
 void Game::addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Character> character) {
     if (!legalCell(coordinates)) {
         throw IllegalCell();
@@ -60,7 +71,7 @@ void Game::addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Chara
         throw CellOccupied();
     }
     characters_vec.push_back(character);
-    int index_in_char_arr = coordinates.row*coordinates.col+coordinates.row;
+    int index_in_char_arr = coordinates.row*width+coordinates.col;
     char character_type = getCharacterTypeChar(character.get());
     grid[index_in_char_arr] = character_type;
 }
@@ -70,20 +81,38 @@ shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team, units_t
     if (health <= 0 || ammo < 0 || power < 0 || range < 0) {
         throw IllegalArgument();
     }
-    //shared_ptr<Character> new_character_ptr;
-    //if (type == SOLDIER) {
+    shared_ptr<Character> new_character_shared_ptr;
+    if (type == SOLDIER) {
         Soldier new_soldier = Soldier(team, health, ammo, range, power);
-        Character* new_character_ptr = &new_soldier;
-        shared_ptr<Character>new_character_shared_ptr(new_character_ptr);
-    //}
-/*    else if (type == MEDIC) {
-        new_character = Medic(team, health, ammo, range, power);
+        shared_ptr<Character>new_character_shared_ptr(&new_soldier);
+    }
+    else if (type == MEDIC) {
+        Medic new_medic = Medic(team, health, ammo, range, power);
+        shared_ptr<Character>new_character_shared_ptr(&new_medic);
     }
     else if (type == SNIPER) {
-        new_character = Sniper(team, health, ammo, range, power);
+        Sniper new_sniper = Sniper(team, health, ammo, range, power);
+        shared_ptr<Character>new_character_shared_ptr(&new_sniper);
     }
-*/
     return new_character_shared_ptr;
+}
+
+
+void Game::move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates) {
+    if (!legalCell(dst_coordinates)) {
+        throw IllegalCell();
+    }
+    if (!cellOccupied(src_coordinates)) {
+        throw CellEmpty();
+    }
+    shared_ptr<Character> src_character = getCharacterByCoordinates(src_coordinates);
+    if (!src_character->moveInRange(dst_coordinates)) {
+        throw MoveTooFar();
+    }
+    if (cellOccupied(dst_coordinates)) {
+        throw CellOccupied();
+    }
+    src_character->updateCoordinates(dst_coordinates);
 }
 
 

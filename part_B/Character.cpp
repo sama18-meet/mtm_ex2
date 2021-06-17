@@ -32,8 +32,13 @@ void Character::increaseHealth(units_t amount) {
 const GridPoint& Character::getCoordinates() const {
     return this->coordinates;
 }
-bool Character::canMove(const GridPoint& src, const GridPoint& dst) const {
-    if (GridPoint::distance(src, dst) <= motion_range) {
+
+void Character::updateCoordinates(const GridPoint& grid_point) {
+    coordinates = grid_point; 
+}
+
+bool Character::moveInRange(const GridPoint& dst) const {
+    if (GridPoint::distance(coordinates, dst) <= motion_range) {
         return true;
     }
     return false;

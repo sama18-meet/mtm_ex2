@@ -22,7 +22,6 @@ protected:
     mtm::units_t load_addition;
 
 protected:
-    bool canMove(const mtm::GridPoint& src, const mtm::GridPoint& dst) const;
     bool canAttack(std::shared_ptr<Character> dst_character, const mtm::GridPoint& dst_coordinates) const;
     virtual bool attackInRange(const mtm::GridPoint& dst_grid_point) const = 0;
     virtual bool enoughAmmo(cell_content_t dst_character_team) const = 0;
@@ -42,7 +41,9 @@ public:
     mtm::units_t getRange() const;
     mtm::units_t getPower() const;
     const mtm::GridPoint& getCoordinates() const;
+    void updateCoordinates(const mtm::GridPoint&);
     void increaseHealth(mtm::units_t amount);
+    bool moveInRange(const mtm::GridPoint& dst) const;
     virtual Character* clone() const = 0;
 };
 #endif
