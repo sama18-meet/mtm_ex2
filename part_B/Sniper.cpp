@@ -32,7 +32,7 @@ bool Sniper::legalTarget(cell_content_t dst_team) const {
     return true;
 }
 
-void Sniper::updateAmmo(std::shared_ptr<Character> target) {
+void Sniper::updateAmmo(cell_content_t dst_character_team) {
     ammo -= 1;
 }
 void Sniper::updateTargetsHealth(const mtm::GridPoint& dst, std::vector<std::shared_ptr<Character>> characters) {
