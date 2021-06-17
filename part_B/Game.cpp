@@ -136,6 +136,10 @@ void Game::reload(const mtm::GridPoint & coordinates){
     getCharacterByCoordinates(coordinates)->reload();
 }
 
+std::ostream& operator<<(std::ostream& os, const Game& game){
+    printGameBoard(os, game.grid, game.grid+game.width*game.height, game.width);
+}
+
 
 bool Game::isOver(Team* winningTeam) const {
     if (characters_vec.size()==0) {
