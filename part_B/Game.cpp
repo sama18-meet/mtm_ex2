@@ -126,6 +126,16 @@ bool Game::cellOccupied(const mtm::GridPoint& grid_point){
     return getCharacterByCoordinates(grid_point)!=nullptr;
 }
 
+void Game::reload(const mtm::GridPoint & coordinates){
+    if(!legalCell(coordinates)){
+        throw IllegalCell();
+    }
+    if(!cellOccupied(coordinates)){
+        throw CellEmpty();
+    }
+    getCharacterByCoordinates(coordinates)->reload();
+}
+
 
 bool Game::isOver(Team* winningTeam) const {
     if (characters_vec.size()==0) {
