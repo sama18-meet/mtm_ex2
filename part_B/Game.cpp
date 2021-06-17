@@ -136,9 +136,6 @@ void Game::reload(const mtm::GridPoint & coordinates){
     getCharacterByCoordinates(coordinates)->reload();
 }
 
-std::ostream& operator<<(std::ostream& os, const Game& game){
-    printGameBoard(os, game.grid, game.grid+game.width*game.height, game.width);
-}
 
 
 bool Game::isOver(Team* winningTeam) const {
@@ -156,4 +153,48 @@ bool Game::isOver(Team* winningTeam) const {
     }
     return true;
 }
+
+std::ostream& operator<<(std::ostream& os, const Game& game){
+    printGameBoard(os, game.grid, game.grid+game.width*game.height, game.width);
+    return os;
+}
+
+void Game::attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates){
+    if(!legalCell(src_coordinates) || !legalCell(dst_coordinates)) {
+        throw IllegalCell();
+    }
+    if(!cellOccupied(src_coordinates)) {
+        throw CellEmpty();
+    }
+    shared_ptr<Character> src_character = getCharacterByCoordinates(src_coordinates);
+    if(!src_character->attackInRange(dst_coordinates)) {
+        throw OutOfRange();
+    }
+    cell_content_t dst_cell_content;
+    shared_ptr<Character> dst_character = getCharacterByCoordinates(dst_coordinates);
+    if (dst_character==nullptr){
+        dst_cell_content=EMPTY_CELL;
+    }
+    else {
+        dst_cell_content=dst_character->getTeam();
+    }
+    if (!src_character->enoughAmmo(dst_cell_content)) {
+        throw OutOfAmmo();
+    }
+    if (!src_character->legalTarget(dst_cell_content)) {
+        throw IllegalTarget();
+    }
+    src_character->updateAmmo(dst_cell_content);
+    src_character->updateTargetsHealth(dst_coordinates, characters_vec);
+    for (std::vector<shared_ptr<Character>>::iterator it = characters_vec.begin(); it!=characters_vec.end(); ) {
+        if ((*it)->getHealth() <= 0) {
+            grid[get1DIndexByCoordinates((*it)->getCoordinates())] = ' ';
+            it = characters_vec.erase(it);
+        }
+        else { 
+            it++;
+        }
+    }
+}
+
 
