@@ -71,9 +71,13 @@ void Game::addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Chara
         throw CellOccupied();
     }
     characters_vec.push_back(character);
-    int index_in_char_arr = coordinates.row*width+coordinates.col;
+    int index_in_char_arr = get1DIndexByCoordinates(coordinates);
     char character_type = getCharacterTypeChar(character.get());
     grid[index_in_char_arr] = character_type;
+}
+
+int Game::get1DIndexByCoordinates(const GridPoint& coordinates) {
+    return coordinates.row*width+coordinates.col;
 }
 
 
