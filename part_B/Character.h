@@ -28,7 +28,6 @@ protected:
     virtual bool legalTarget(cell_content_t dst_character_team) const = 0;
     virtual void updateAmmo(std::shared_ptr<Character> target) = 0;
     virtual void updateTargetsHealth(const mtm::GridPoint& dst, std::vector<std::shared_ptr<Character>> characters) = 0;
-    void reload();
 
 public:
     Character(mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power);
@@ -45,5 +44,6 @@ public:
     void increaseHealth(mtm::units_t amount);
     bool moveInRange(const mtm::GridPoint& dst) const;
     virtual Character* clone() const = 0;
+    void reload();
 };
 #endif
