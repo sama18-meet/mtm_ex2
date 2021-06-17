@@ -36,7 +36,7 @@ bool Medic::legalTarget(cell_content_t dst_team) const {
 }
 
 void Medic::updateAmmo(cell_content_t dst_character_team) {
-    if (target->getTeam() != team) {
+    if (dst_character_team != team) {
         ammo -= 1;
     }
 }
