@@ -35,7 +35,7 @@ bool Medic::legalTarget(cell_content_t dst_team) const {
     return true;
 }
 
-void Medic::updateAmmo(std::shared_ptr<Character> target) {
+void Medic::updateAmmo(cell_content_t dst_character_team) {
     if (target->getTeam() != team) {
         ammo -= 1;
     }
