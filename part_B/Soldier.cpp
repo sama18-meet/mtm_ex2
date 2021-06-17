@@ -28,7 +28,7 @@ bool Soldier::legalTarget(cell_content_t dst_team) const {
 }
 
 
-void Soldier::updateAmmo(std::shared_ptr<Character> target) {
+void Soldier::updateAmmo(cell_content_t dst_character_team) {
     ammo -= SOLDIER_ATTACK_COST;
 }
 
