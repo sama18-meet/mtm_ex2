@@ -49,6 +49,10 @@ void Soldier::updateTargetsHealth(const GridPoint& dst, std::vector<shared_ptr<C
     }
 }
 
+ 
+char Soldier::getTypeChar() const {
+    return team==POWERLIFTERS ? 'S' : 's';
+}
 
 Character* Soldier::clone() const {
     return new Soldier(*this);

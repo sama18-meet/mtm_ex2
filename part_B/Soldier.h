@@ -12,6 +12,7 @@ private:
     bool legalTarget(cell_content_t dst_team) const override;
     void updateAmmo(cell_content_t dst_character_team);
     void updateTargetsHealth(const mtm::GridPoint& dst, std::vector<std::shared_ptr<Character>>);
+    char getTypeChar() const override;
     Character* clone() const;
 public:
     Soldier(mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power);

@@ -42,5 +42,6 @@ public:
     bool moveInRange(const mtm::GridPoint& dst) const;
     virtual Character* clone() const = 0;
     void reload();
+    virtual char getTypeChar() const = 0;
 };
 #endif

@@ -11,24 +11,10 @@ using std::shared_ptr;
 
 
 Game::Game(int height, int width) :
-        height(height), grid(height*width, ' '), characters_vec() {
+        height(height), width(width), grid(height*width, ' '), characters_vec() {
     if (height <=0 || width <=0){
         throw IllegalArgument(); 
     }
-}
-
-
-char Game::getCharacterTypeChar(Character* character) {
-    if (dynamic_cast<Soldier*>(character) != nullptr) {
-        return character->getTeam() == CROSSFITTERS ? 's' : 'S';    
-    }
-    if (dynamic_cast<Medic*>(character) != nullptr) {
-        return character->getTeam() == CROSSFITTERS ? 'm' : 'M';    
-    }
-    if (dynamic_cast<Sniper*>(character) != nullptr) {
-        return character->getTeam() == CROSSFITTERS ? 'n' : 'N';    
-    }
-    return '?';
 }
 
 
@@ -50,8 +36,7 @@ void Game::addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Chara
     }
     characters_vec.push_back(character);
     int index_in_char_arr = get1DIndexByCoordinates(coordinates);
-    char character_type = getCharacterTypeChar(character.get());
-    grid[index_in_char_arr] = character_type;
+    grid[index_in_char_arr] = character->getTypeChar();
 }
 
 int Game::get1DIndexByCoordinates(const GridPoint& coordinates) {
@@ -63,20 +48,22 @@ shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team, units_t
     if (health <= 0 || ammo < 0 || power < 0 || range < 0) {
         throw IllegalArgument();
     }
-    shared_ptr<Character> new_character_shared_ptr;
     if (type == SOLDIER) {
         Soldier new_soldier = Soldier(team, health, ammo, range, power);
-        shared_ptr<Character>new_character_shared_ptr(&new_soldier);
+        shared_ptr<Character> new_character_shared_ptr(&new_soldier);
+        return new_character_shared_ptr;
     }
     else if (type == MEDIC) {
         Medic new_medic = Medic(team, health, ammo, range, power);
-        shared_ptr<Character>new_character_shared_ptr(&new_medic);
+        shared_ptr<Character> new_character_shared_ptr(&new_medic);
+        return new_character_shared_ptr;
     }
     else if (type == SNIPER) {
         Sniper new_sniper = Sniper(team, health, ammo, range, power);
-        shared_ptr<Character>new_character_shared_ptr(&new_sniper);
+        shared_ptr<Character> new_character_shared_ptr(&new_sniper);
+        return new_character_shared_ptr;
     }
-    return new_character_shared_ptr;
+    return nullptr;
 }
 
 
@@ -98,7 +85,7 @@ void Game::move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & d
 }
 
 bool Game::legalCell(const mtm::GridPoint& grid_point){
-    if(grid_point.row>=0 && grid_point.row<width && grid_point.col>=0 && grid_point.col<height) {
+    if (grid_point.row>=0 && grid_point.row<width && grid_point.col>=0 && grid_point.col<height) {
         return true;
     }
     return false; 

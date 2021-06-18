@@ -51,6 +51,11 @@ void Sniper::updateTargetsHealth(const mtm::GridPoint& dst, std::vector<std::sha
     attack_counter++;
 }
 
+char Sniper::getTypeChar() const {
+    return team==POWERLIFTERS ? 'N' : 'n';
+}
+
+
 Character* Sniper::clone() const {
     return new Sniper(*this);
 }

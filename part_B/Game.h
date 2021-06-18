@@ -14,7 +14,6 @@ private:
 private:
     bool legalCell(const mtm::GridPoint& grid_point);
     bool cellOccupied(const mtm::GridPoint& grid_point);
-    char getCharacterTypeChar(Character*);
     std::shared_ptr<Character> getCharacterByCoordinates(const mtm::GridPoint&);
     int get1DIndexByCoordinates(const mtm::GridPoint&);
 

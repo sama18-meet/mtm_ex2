@@ -55,6 +55,9 @@ void Medic::updateTargetsHealth(const mtm::GridPoint& dst, std::vector<shared_pt
     }
 }
 
+char Medic::getTypeChar() const {
+    return team==POWERLIFTERS ? 'M' : 'm';
+}
 
 Character* Medic::clone() const {
     return new Medic(*this);
