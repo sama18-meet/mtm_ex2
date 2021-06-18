@@ -1,5 +1,4 @@
 #include <memory>
-#include <cstddef>
 #include <string.h>
 #include "Game.h"
 #include "Soldier.h"
@@ -11,32 +10,11 @@ using namespace mtm;
 using std::shared_ptr;
 
 
-Game::Game(int height, int width) {
+Game::Game(int height, int width) :
+        height(height), grid(height*width, ' '), characters_vec() {
     if (height <=0 || width <=0){
         throw IllegalArgument(); 
     }
-    height = height;
-    width = width;
-    grid = new char[height*width]; 
-    memset(grid, ' ', height*width);
-    characters_vec = std::vector<shared_ptr<Character>>();
-}
-
-Game::~Game() {
-    delete[] grid;
-}
-
-Game::Game(const Game& other) : height(other.height), width(other.width) {
-    characters_vec = other.characters_vec;  
-    strncpy(grid, other.grid, height*width);
-}
-
-Game& Game::operator=(const Game& other) {
-    height = other.height;
-    width = other.width;
-    characters_vec = other.characters_vec;  
-    strncpy(grid, other.grid, height*width);
-    return *this;
 }
 
 
@@ -159,7 +137,7 @@ bool Game::isOver(Team* winningTeam) const {
 }
 
 std::ostream& operator<<(std::ostream& os, const Game& game){
-    printGameBoard(os, game.grid, game.grid+game.width*game.height, game.width);
+    printGameBoard(os, game.grid.c_str(), game.grid.c_str()+game.width*game.height, game.width);
     return os;
 }
 
