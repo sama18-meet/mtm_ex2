@@ -40,7 +40,7 @@ Game& Game::operator=(const Game& other) {
 }
 
 
-char getCharacterTypeChar(Character* character) {
+char Game::getCharacterTypeChar(Character* character) {
     if (dynamic_cast<Soldier*>(character) != nullptr) {
         return character->getTeam() == CROSSFITTERS ? 's' : 'S';    
     }

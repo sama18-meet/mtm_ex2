@@ -1,30 +1,44 @@
+#ifndef _EXCEPTIONS_H
+#define _EXCEPTIONS_H
+
+#include <exception>
 
 namespace mtm {
 
-    class Exception : std::exception {};
+    class Exception: public std::exception {};
 
-    class IllegalArgument : Exception {
+    class IllegalArgument : public Exception {
+    public:
         const char* what() const noexcept override;
     };
-    class IllegalCell : Exception {
+    class IllegalCell : public Exception {
+    public:
         const char* what() const noexcept override;
     };
-    class CellEmpty : Exception {
+    class CellEmpty : public Exception {
+    public:
         const char* what() const noexcept override;
     };
-    class MoveTooFar : Exception {
+    class MoveTooFar : public Exception {
+    public:
         const char* what() const noexcept override;
     };
-    class CellOccupied : Exception {
+    class CellOccupied : public Exception {
+    public:
         const char* what() const noexcept override;
     };
-    class OutOfRange : Exception {
+    class OutOfRange : public Exception {
+    public:
         const char* what() const noexcept override;
     };
-    class OutOfAmmo : Exception {
+    class OutOfAmmo : public Exception {
+    public:
         const char* what() const noexcept override;
     };
-    class IllegalTarget : Exception {
+    class IllegalTarget : public Exception {
+    public:
         const char* what() const noexcept override;
     };
 }
+
+#endif

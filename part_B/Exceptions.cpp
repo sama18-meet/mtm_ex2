@@ -1,5 +1,6 @@
 #include "Exceptions.h"
 
+using namespace mtm;
 
 const char* IllegalArgument::what() const noexcept {
     return "A game related error has occurred: IllegalArgument";
@@ -25,6 +26,5 @@ const char* OutOfAmmo::what() const noexcept {
 const char* IllegalTarget::what() const noexcept {
     return "A game related error has occurred: IllegalTarget";
 }
-
 
 
