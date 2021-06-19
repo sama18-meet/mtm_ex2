@@ -47,3 +47,7 @@ bool Character::moveInRange(const GridPoint& dst) const {
 void Character::reload(){
     ammo += this->load_addition;
 }
+
+int Character::roundUpDivision(int numerator, int denominator) {
+    return (numerator%denominator == 0) ? numerator/denominator : numerator/denominator + 1;
+}

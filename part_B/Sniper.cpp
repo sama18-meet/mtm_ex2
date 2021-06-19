@@ -13,7 +13,7 @@ Sniper::Sniper(Team team, units_t health, units_t ammo, units_t range, units_t p
 
 bool Sniper::attackInRange(const GridPoint& dst_grid_point) const {
     int distance = GridPoint::distance(coordinates, dst_grid_point);
-    int min_dist = (range%2 == 0) ? range/2 : range/2 + 1;
+    int min_dist = roundUpDivision(range,2);
     if (distance > range || distance < min_dist) {
         return false;
     }

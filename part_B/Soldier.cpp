@@ -38,13 +38,13 @@ void Soldier::updateTargetsHealth(const GridPoint& dst, std::vector<shared_ptr<C
         if (curr_character->getTeam() == team) {
             continue;
         }
-        int distance = GridPoint::distance(curr_character->getCoordinates(), coordinates);
+        int distance = GridPoint::distance(curr_character->getCoordinates(), dst);
         if (distance == 0) {
             curr_character->increaseHealth(-power);
             continue;
         }
-        if (distance <= range/3 + 1) {
-            curr_character->increaseHealth(-(power/2 + 1));
+        if (distance <= roundUpDivision(range,3)) {
+            curr_character->increaseHealth(-roundUpDivision(power,2));
         }
     }
 }

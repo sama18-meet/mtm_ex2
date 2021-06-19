@@ -21,6 +21,9 @@ protected:
     mtm::units_t motion_range;
     mtm::units_t load_addition;
 
+protected:
+    int static roundUpDivision(int numerator, int denominator);
+
 public:
     virtual bool attackInRange(const mtm::GridPoint& dst_grid_point) const = 0;
     virtual bool enoughAmmo(cell_content_t dst_character_team) const = 0;
