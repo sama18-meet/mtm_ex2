@@ -23,7 +23,7 @@ bool Soldier::enoughAmmo(cell_content_t dst_team) const {
     return ammo >= 1;
 }
 
-bool Soldier::legalTarget(cell_content_t dst_team) const {
+bool Soldier::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_team) const {
     return true;
 }
 

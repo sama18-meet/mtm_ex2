@@ -26,7 +26,7 @@ bool Sniper::enoughAmmo(cell_content_t dst_team) const {
 }
 
 
-bool Sniper::legalTarget(cell_content_t dst_team) const {
+bool Sniper::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_team) const {
     if (dst_team == this->team) {
         return false;
     }

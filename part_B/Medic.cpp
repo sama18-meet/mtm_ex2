@@ -13,9 +13,6 @@ bool Medic::attackInRange(const GridPoint& dst_grid_point) const {
     if (GridPoint::distance(coordinates, dst_grid_point) > range) {
         return false;
     }
-    if (GridPoint::distance(coordinates, dst_grid_point) == 0) {
-        return false;
-    }
     return true;
 }
 
@@ -28,8 +25,11 @@ bool Medic::enoughAmmo(cell_content_t dst_team) const {
 }
 
 
-bool Medic::legalTarget(cell_content_t dst_team) const {
+bool Medic::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_team) const {
     if (dst_team == EMPTY_CELL) {
+        return false;
+    }
+    if (GridPoint::distance(coordinates, dst_grid_point) == 0) {
         return false;
     }
     return true;

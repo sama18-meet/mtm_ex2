@@ -148,7 +148,7 @@ void Game::attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint &
     if (!src_character->enoughAmmo(dst_cell_content)) {
         throw OutOfAmmo();
     }
-    if (!src_character->legalTarget(dst_cell_content)) {
+    if (!src_character->legalTarget(dst_coordinates, dst_cell_content)) {
         throw IllegalTarget();
     }
     src_character->updateAmmo(dst_cell_content);
