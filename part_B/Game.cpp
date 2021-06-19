@@ -79,11 +79,13 @@ void Game::move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & d
     if (cellOccupied(dst_coordinates)) {
         throw CellOccupied();
     }
+    grid[get1DIndexByCoordinates(dst_coordinates)] = grid[get1DIndexByCoordinates(src_coordinates)];
+    grid[get1DIndexByCoordinates(src_coordinates)] = ' ';
     src_character->updateCoordinates(dst_coordinates);
 }
 
 bool Game::legalCell(const mtm::GridPoint& grid_point){
-    if (grid_point.row>=0 && grid_point.row<width && grid_point.col>=0 && grid_point.col<height) {
+    if (grid_point.row>=0 && grid_point.row<height && grid_point.col>=0 && grid_point.col<width) {
         return true;
     }
     return false; 
