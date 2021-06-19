@@ -49,18 +49,15 @@ shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team, units_t
         throw IllegalArgument();
     }
     if (type == SOLDIER) {
-        Soldier new_soldier = Soldier(team, health, ammo, range, power);
-        shared_ptr<Character> new_character_shared_ptr(&new_soldier);
+        shared_ptr<Character> new_character_shared_ptr(new Soldier(team, health, ammo, range, power));
         return new_character_shared_ptr;
     }
     else if (type == MEDIC) {
-        Medic new_medic = Medic(team, health, ammo, range, power);
-        shared_ptr<Character> new_character_shared_ptr(&new_medic);
+        shared_ptr<Character> new_character_shared_ptr(new Medic(team, health, ammo, range, power));
         return new_character_shared_ptr;
     }
     else if (type == SNIPER) {
-        Sniper new_sniper = Sniper(team, health, ammo, range, power);
-        shared_ptr<Character> new_character_shared_ptr(&new_sniper);
+        shared_ptr<Character> new_character_shared_ptr(new Sniper(team, health, ammo, range, power));
         return new_character_shared_ptr;
     }
     return nullptr;
