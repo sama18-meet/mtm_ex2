@@ -65,7 +65,7 @@ template <class T>
 template <class Predicate>
 SortedList<T> SortedList<T>::filter(Predicate function){
     SortedList sorted_list_filter= SortedList();
-    for(const_iterator i=this.begin(); i!=this.end(); ++i){
+    for(const_iterator i=this.begin(); !(i==this.end()); ++i){
         if(function(*i)){
             sorted_list_filter.insert(*i);
         }
