@@ -34,6 +34,7 @@ void Game::addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Chara
     if (cellOccupied(coordinates)) {
         throw CellOccupied();
     }
+    character->updateCoordinates(coordinates);
     characters_vec.push_back(character);
     int index_in_char_arr = get1DIndexByCoordinates(coordinates);
     grid[index_in_char_arr] = character->getTypeChar();
