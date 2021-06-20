@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "examDetails.h"
+#include <cmath>
 #define DAYS_IN_MONTH 30
 #define DOUBLE_ACCURACY 0.000001
 
