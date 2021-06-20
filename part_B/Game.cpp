@@ -66,7 +66,7 @@ shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team, units_t
 
 
 void Game::move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates) {
-    if (!legalCell(dst_coordinates)) {
+    if (!legalCell(src_coordinates) || !legalCell(dst_coordinates)) {
         throw IllegalCell();
     }
     if (!cellOccupied(src_coordinates)) {
@@ -76,12 +76,14 @@ void Game::move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & d
     if (!src_character->moveInRange(dst_coordinates)) {
         throw MoveTooFar();
     }
-    if (cellOccupied(dst_coordinates)) {
+    if (!(src_coordinates == dst_coordinates) && cellOccupied(dst_coordinates)) {
         throw CellOccupied();
     }
-    grid[get1DIndexByCoordinates(dst_coordinates)] = grid[get1DIndexByCoordinates(src_coordinates)];
-    grid[get1DIndexByCoordinates(src_coordinates)] = ' ';
-    src_character->updateCoordinates(dst_coordinates);
+    if (!(src_coordinates == dst_coordinates)) {
+        grid[get1DIndexByCoordinates(dst_coordinates)] = grid[get1DIndexByCoordinates(src_coordinates)];
+        grid[get1DIndexByCoordinates(src_coordinates)] = ' ';
+        src_character->updateCoordinates(dst_coordinates);
+    }
 }
 
 bool Game::legalCell(const mtm::GridPoint& grid_point){

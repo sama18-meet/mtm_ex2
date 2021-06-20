@@ -13,9 +13,6 @@ bool Soldier::attackInRange(const GridPoint& dst_grid_point) const {
     if (GridPoint::distance(coordinates, dst_grid_point) > range) {
         return false;
     }
-    if (coordinates.row != dst_grid_point.row && coordinates.col != dst_grid_point.col) {
-        return false;
-    }
     return true;
 }
 
@@ -24,6 +21,9 @@ bool Soldier::enoughAmmo(cell_content_t dst_team) const {
 }
 
 bool Soldier::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_team) const {
+    if (coordinates.row != dst_grid_point.row && coordinates.col != dst_grid_point.col) {
+        return false;
+    }
     return true;
 }
 
