@@ -4,9 +4,9 @@
 #define DAYS_IN_MONTH 30
 #define DOUBLE_ACCURACY 0.000001
 
-using std::cout;
 using std::endl;
 using std::string;
+using namespace mtm;
 
 ExamDetails::ExamDetails(int course_id, int month, int day, double start_time, int total_time, const string zoom_link) :
     course_id(course_id), month(month), day(day), start_time(start_time), total_time(total_time), zoom_link(zoom_link) {
@@ -61,13 +61,15 @@ ExamDetails ExamDetails::makeMatamExam() {
     return mtm_exam;
 }
 
-std::ostream& operator<<(std::ostream& os, const ExamDetails& exam_details) {
-    os << "Course Number: " << exam_details.course_id << endl;
-    string minutes = ExamDetails::equalNums(exam_details.start_time, (int)exam_details.start_time) ? "00" : "30";
-    os << "Time: " << exam_details.day << "." << exam_details.month << " at " << (int)exam_details.start_time << ":" << minutes << endl;
-    os << "Duration: " << exam_details.total_time << ":00" << endl;
-    os << "Zoom Link: " << exam_details.zoom_link << endl;
-    return os;
+namespace mtm {
+    std::ostream& operator<<(std::ostream& os, const ExamDetails& exam_details) {
+        os << "Course Number: " << exam_details.course_id << endl;
+        string minutes = ExamDetails::equalNums(exam_details.start_time, (int)exam_details.start_time) ? "00" : "30";
+        os << "Time: " << exam_details.day << "." << exam_details.month << " at " << (int)exam_details.start_time << ":" << minutes << endl;
+        os << "Duration: " << exam_details.total_time << ":00" << endl;
+        os << "Zoom Link: " << exam_details.zoom_link << endl;
+        return os;
+}
 
 }
 
