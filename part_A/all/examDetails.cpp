@@ -3,6 +3,9 @@
 #include "examDetails.h"
 #include <cmath>
 #define DAYS_IN_MONTH 30
+#define HOURS_IN_DAY 24
+#define MONTHS_IN_YEAR 12
+#define TWO 2
 #define DOUBLE_ACCURACY 0.000001
 
 using std::cout;
@@ -16,11 +19,11 @@ ExamDetails::ExamDetails(int course_id, int month, int day, double start_time, i
     {
         throw InvalidArgsException();
     }
-    if (month < 1 || month > 12 || day < 1 || day > 30)
+    if (month < 1 || month > MONTHS_IN_YEAR || day < 1 || day > DAYS_IN_MONTH)
     {
         throw InvalidDateException();
     }
-    if (!(equalNums((int)(start_time * 2), start_time * 2)))
+    if (!validHour(start_time))
     {
         throw InvalidTimeException();
     }
@@ -54,6 +57,11 @@ bool ExamDetails::equalNums(double num1, double num2)
 {
     return std::abs(num2 - num1) <  DOUBLE_ACCURACY ; 
 }
+
+bool ExamDetails::validHour(double hour) {
+    return hour >= 0 && hour <HOURS_IN_DAY && equalNums((int)(hour * TWO), hour * TWO);
+}
+
 bool ExamDetails::operator<(const ExamDetails &exam_details1) const
 {
     int date_difference = dateDifference(this->month, this->day, exam_details1.month, exam_details1.day);

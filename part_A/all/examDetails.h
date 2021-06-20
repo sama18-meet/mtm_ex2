@@ -13,6 +13,7 @@ namespace mtm {
         std::string zoom_link;
         static int dateDifference(int month1, int day1, int month2, int day2);
         static bool equalNums(double num1, double num2);
+        static bool validHour(double hour);
     public:
         ExamDetails(int course_id, int month, int day, double start_time, int total_time, const std::string zoom_link=""); // not sure if zoom_link should be const
         ~ExamDetails() = default;
