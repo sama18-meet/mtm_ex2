@@ -13,7 +13,7 @@ private:
     struct Node {
         T item;
         struct Node* next;
-        Node(T item,Node* next ):  item(item), next(next) {}; 
+        Node(const T& item, Node* next ):  item(item), next(next) {}; 
     };
     Node* first_node;
     int len;
