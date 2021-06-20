@@ -1,3 +1,6 @@
+#ifndef _EXAM_DETAILS_H
+#define _EXAM_DETAILS_H
+
 #include <string>
 #include <ostream>
 
@@ -20,7 +23,7 @@ namespace mtm {
         ExamDetails(const ExamDetails& exam_details) = default;
         ExamDetails& operator=(const ExamDetails& exam_details) = default;
         std::string getLink() const;
-        void setLink(std::string new_link);
+        void setLink(const std::string& new_link);
         int operator-(const ExamDetails& exam_details) const;
         bool operator<(const ExamDetails& exam_details) const;
         static ExamDetails makeMatamExam();
@@ -33,3 +36,5 @@ namespace mtm {
     };
 
 }
+
+#endif // _EXAM_DETAILS_H

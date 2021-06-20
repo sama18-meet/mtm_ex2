@@ -1,5 +1,6 @@
-#ifndef SORTED_LIST_H
-#define SORTED_LIST_H
+#ifndef _SORTED_LIST_H
+#define _SORTED_LIST_H
+
 #include "sortedList.h"
 #include <iostream>
 #include <stdexcept>
@@ -28,9 +29,9 @@ public:
     SortedList& operator=(const SortedList&);
 
     template <class Predicate>
-    SortedList filter(Predicate function);
+    SortedList filter(Predicate function) const;
     template <class function>
-    SortedList apply(function func);
+    SortedList apply(function func) const;
 
     class const_iterator;
     const_iterator begin() const;
@@ -64,7 +65,7 @@ public:
 
 template <class T>
 template <class Predicate>
-SortedList<T> SortedList<T>::filter(Predicate function){
+SortedList<T> SortedList<T>::filter(Predicate function) const {
     SortedList sorted_list_filter= SortedList();
     for(const_iterator i=this->begin(); !(i==this->end()); ++i){
         if(function(*i)){
@@ -77,7 +78,7 @@ SortedList<T> SortedList<T>::filter(Predicate function){
 
 template <class T>
 template <class function>
-SortedList<T> SortedList<T>::apply(function func) {
+SortedList<T> SortedList<T>::apply(function func) const {
     SortedList sorted_list_apply= SortedList();
     for(const_iterator i = this->begin(); (!(i==this->end())); ++i){
         T returned_value=func(*i);

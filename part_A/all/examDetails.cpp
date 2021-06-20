@@ -7,6 +7,15 @@
 #define MONTHS_IN_YEAR 12
 #define TWO 2
 #define DOUBLE_ACCURACY 0.000001
+#define MTM_COURSE_NUM 234124
+#define MTM_EXAM_MONTH 7
+#define MTM_EXAM_DAY 28
+#define MTM_EXAM_START_TIME 13
+#define MTM_EXAM_TOTAL_TIME 3
+#define MTM_EXAM_URL "https://tinyurl.com/59hzps6m"
+#define WHOLE_HOUR "00"
+#define HALF_HOUR "30"
+
 
 using std::cout;
 using std::endl;
@@ -38,7 +47,7 @@ string ExamDetails::getLink() const
     return this->zoom_link;
 }
 
-void ExamDetails::setLink(string new_link)
+void ExamDetails::setLink(const string& new_link)
 {
     this->zoom_link = new_link;
 }
@@ -59,7 +68,7 @@ bool ExamDetails::equalNums(double num1, double num2)
 }
 
 bool ExamDetails::validHour(double hour) {
-    return hour >= 0 && hour <HOURS_IN_DAY && equalNums((int)(hour * TWO), hour * TWO);
+    return hour >= 0 && hour < HOURS_IN_DAY && equalNums((int)(hour * TWO), hour * TWO);
 }
 
 bool ExamDetails::operator<(const ExamDetails &exam_details1) const
@@ -77,7 +86,7 @@ bool ExamDetails::operator<(const ExamDetails &exam_details1) const
 
 ExamDetails ExamDetails::makeMatamExam()
 {
-    return ExamDetails(234124, 7, 28, 13, 3, "https://tinyurl.com/59hzps6m");
+    return ExamDetails(MTM_COURSE_NUM, MTM_EXAM_MONTH, MTM_EXAM_DAY, MTM_EXAM_START_TIME, MTM_EXAM_TOTAL_TIME, MTM_EXAM_URL);
 }
 
 namespace mtm
@@ -85,9 +94,9 @@ namespace mtm
     std::ostream &operator<<(std::ostream &os, const ExamDetails &exam_details)
     {
         os << "Course Number: " << exam_details.course_id << endl;
-        string minutes = ExamDetails::equalNums(exam_details.start_time, (int)exam_details.start_time) ? "00" : "30";
+        string minutes = ExamDetails::equalNums(exam_details.start_time, (int)exam_details.start_time) ? WHOLE_HOUR : HALF_HOUR;
         os << "Time: " << exam_details.day << "." << exam_details.month << " at " << (int)exam_details.start_time << ":" << minutes << endl;
-        os << "Duration: " << exam_details.total_time << ":00" << endl;
+        os << "Duration: " << exam_details.total_time << ":" << WHOLE_HOUR << endl;
         os << "Zoom Link: " << exam_details.zoom_link << endl;
         return os;
     }
