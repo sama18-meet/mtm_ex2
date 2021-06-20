@@ -41,10 +41,7 @@ int ExamDetails::dateDifference(int month1, int day1, int month2, int day2) {
 }
 
 bool ExamDetails::equalNums(double num1, double num2) {
-    if (num2-num1 < DOUBLE_ACCURACY || num1-num2 < DOUBLE_ACCURACY) {
-        return true;
-    }
-    return false;
+    return std::abs(num2 - num1) <  DOUBLE_ACCURACY ; 
 }
 bool ExamDetails::operator<(const ExamDetails& exam_details) const {
     int date_difference = dateDifference(this->month, this->day, exam_details.month, exam_details.day);
