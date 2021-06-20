@@ -1,5 +1,12 @@
 #include "Soldier.h"
 
+#define POWERLIFTER_SOLDIER 'S'
+#define CROSSFITTER_SOLDIER 's'
+#define SOLDIER_ATTACK_COST 1
+#define THREE 3
+#define TWO 2
+
+
 using namespace mtm;
 using std::shared_ptr;
 
@@ -17,7 +24,7 @@ bool Soldier::attackInRange(const GridPoint& dst_grid_point) const {
 }
 
 bool Soldier::enoughAmmo(cell_content_t dst_team) const {
-    return ammo >= 1;
+    return ammo >= SOLDIER_ATTACK_COST;
 }
 
 bool Soldier::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_team) const {
@@ -43,15 +50,15 @@ void Soldier::updateTargetsHealth(const GridPoint& dst, std::vector<shared_ptr<C
             curr_character->increaseHealth(-power);
             continue;
         }
-        if (distance <= roundUpDivision(range,3)) {
-            curr_character->increaseHealth(-roundUpDivision(power,2));
+        if (distance <= roundUpDivision(range,THREE)) {
+            curr_character->increaseHealth(-roundUpDivision(power,TWO));
         }
     }
 }
 
  
 char Soldier::getTypeChar() const {
-    return team==POWERLIFTERS ? 'S' : 's';
+    return team==POWERLIFTERS ? POWERLIFTER_SOLDIER : CROSSFITTER_SOLDIER;
 }
 
 Character* Soldier::clone() const {

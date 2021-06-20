@@ -1,5 +1,10 @@
 #include "Medic.h"
 
+#define POWERLIFTER_MEDIC 'M'
+#define CROSSFITTER_MEDIC 'm'
+#define MEDIC_ATTACK_COST 1
+
+
 using namespace mtm;
 using std::shared_ptr;
 
@@ -21,7 +26,7 @@ bool Medic::enoughAmmo(cell_content_t dst_team) const {
     if (dst_team == static_cast<cell_content_t>(this->getTeam())) {
         return true;
     }
-    return ammo >= 1;
+    return ammo >= MEDIC_ATTACK_COST;
 }
 
 
@@ -37,7 +42,7 @@ bool Medic::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_team
 
 void Medic::updateAmmo(cell_content_t dst_character_team) {
     if (dst_character_team != team) {
-        ammo -= 1;
+        ammo -= MEDIC_ATTACK_COST;
     }
 }
 
@@ -56,7 +61,7 @@ void Medic::updateTargetsHealth(const mtm::GridPoint& dst, std::vector<shared_pt
 }
 
 char Medic::getTypeChar() const {
-    return team==POWERLIFTERS ? 'M' : 'm';
+    return team==POWERLIFTERS ? POWERLIFTER_MEDIC : CROSSFITTER_MEDIC;
 }
 
 Character* Medic::clone() const {

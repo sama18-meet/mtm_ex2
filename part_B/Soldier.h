@@ -1,3 +1,6 @@
+#ifndef _SOLDIER_H
+#define _SOLDIER_H
+
 #include "Character.h"
 
 #define SOLDIER_MOTION_RANGE 3
@@ -17,3 +20,4 @@ private:
 public:
     Soldier(mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power);
 };
+#endif // _SOLDIER_H

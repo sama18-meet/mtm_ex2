@@ -1,5 +1,12 @@
 #include "Sniper.h"
 
+#define POWERLIFTER_SNIPER 'N'
+#define CROSSFITTER_SNIPER 'n'
+#define SNIPER_ATTACK_COST 1
+#define SNIPER_ATTACK_DAMAGE_RESET 3
+#define TWO 2
+
+
 using namespace mtm;
 using std::shared_ptr;
 
@@ -13,7 +20,7 @@ Sniper::Sniper(Team team, units_t health, units_t ammo, units_t range, units_t p
 
 bool Sniper::attackInRange(const GridPoint& dst_grid_point) const {
     int distance = GridPoint::distance(coordinates, dst_grid_point);
-    int min_dist = roundUpDivision(range,2);
+    int min_dist = roundUpDivision(range,TWO);
     if (distance > range || distance < min_dist) {
         return false;
     }
@@ -22,7 +29,7 @@ bool Sniper::attackInRange(const GridPoint& dst_grid_point) const {
 
 
 bool Sniper::enoughAmmo(cell_content_t dst_team) const {
-    return ammo >= 1;
+    return ammo >= SNIPER_ATTACK_COST;
 }
 
 
@@ -34,15 +41,15 @@ bool Sniper::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_tea
 }
 
 void Sniper::updateAmmo(cell_content_t dst_character_team) {
-    ammo -= 1;
+    ammo -= SNIPER_ATTACK_COST;
 }
 void Sniper::updateTargetsHealth(const mtm::GridPoint& dst, std::vector<std::shared_ptr<Character>> characters) {
     for (shared_ptr<Character> curr_character : characters) {
         if (!(curr_character->getCoordinates() == dst)) {
             continue; 
         }
-        if (attack_counter%3 == 2) {
-            curr_character->increaseHealth(-power*2);
+        if (attack_counter%SNIPER_ATTACK_DAMAGE_RESET == TWO) {
+            curr_character->increaseHealth(-power*TWO);
         }
         else {
             curr_character->increaseHealth(-power);
@@ -53,7 +60,7 @@ void Sniper::updateTargetsHealth(const mtm::GridPoint& dst, std::vector<std::sha
 }
 
 char Sniper::getTypeChar() const {
-    return team==POWERLIFTERS ? 'N' : 'n';
+    return team==POWERLIFTERS ? POWERLIFTER_SNIPER : CROSSFITTER_SNIPER;
 }
 
 

@@ -1,3 +1,6 @@
+#ifndef _GAME_H
+#define _GAME_H
+
 #include <memory>
 #include <vector>
 #include "Auxiliaries.h"
@@ -23,10 +26,13 @@ public: // ?
     Game(const Game& other) = default;
     Game& operator=(const Game& other) = default;
     void addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Character> character);
-    static std::shared_ptr<Character> makeCharacter(mtm::CharacterType type, mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power);
+    static std::shared_ptr<Character> makeCharacter(mtm::CharacterType type, mtm::Team team,
+            mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power);
     void move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates);
     void attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates);
     void reload(const mtm::GridPoint & coordinates);
     bool isOver(mtm::Team* winningTeam=NULL) const;
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
 };
+
+#endif

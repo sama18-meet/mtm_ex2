@@ -1,3 +1,6 @@
+#ifndef _MEDIC_H
+#define _MEDIC_H
+
 #include "Character.h"
 
 #define MEDIC_MOTION_RANGE 5
@@ -16,3 +19,4 @@ private:
 public:
     Medic(mtm::Team team, mtm::units_t health, mtm::units_t ammo, mtm::units_t range, mtm::units_t power);
 };
+#endif // _MEDIC_H
