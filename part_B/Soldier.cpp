@@ -40,7 +40,8 @@ void Soldier::updateAmmo(cell_content_t dst_character_team) {
 }
 
 
-void Soldier::updateTargetsHealth(const GridPoint& dst, std::vector<shared_ptr<Character>> characters) {
+void Soldier::updateTargetsHealth(const GridPoint& dst,
+                                  std::vector<shared_ptr<Character>>& characters) {
     for (shared_ptr<Character> curr_character : characters) {
         if (curr_character->getTeam() == team) {
             continue;

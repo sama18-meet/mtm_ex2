@@ -15,10 +15,10 @@ private:
 
 
 private:
-    bool legalCell(const mtm::GridPoint& grid_point);
-    bool cellOccupied(const mtm::GridPoint& grid_point);
-    std::shared_ptr<Character> getCharacterByCoordinates(const mtm::GridPoint&);
-    int get1DIndexByCoordinates(const mtm::GridPoint&);
+    bool legalCell(const mtm::GridPoint& grid_point) const;
+    bool cellOccupied(const mtm::GridPoint& grid_point) const;
+    std::shared_ptr<Character> getCharacterByCoordinates(const mtm::GridPoint&) const;
+    int get1DIndexByCoordinates(const mtm::GridPoint&) const;
 
 public: // ?
     Game(int height, int width);

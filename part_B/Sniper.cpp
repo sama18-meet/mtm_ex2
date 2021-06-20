@@ -33,7 +33,7 @@ bool Sniper::enoughAmmo(cell_content_t dst_team) const {
 }
 
 
-bool Sniper::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_team) const {
+bool Sniper::legalTarget(const GridPoint& dst_grid_point,cell_content_t dst_team) const {
     if (dst_team == this->team || dst_team == EMPTY_CELL) {
         return false;
     }
@@ -43,7 +43,8 @@ bool Sniper::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_tea
 void Sniper::updateAmmo(cell_content_t dst_character_team) {
     ammo -= SNIPER_ATTACK_COST;
 }
-void Sniper::updateTargetsHealth(const mtm::GridPoint& dst, std::vector<std::shared_ptr<Character>> characters) {
+void Sniper::updateTargetsHealth(const mtm::GridPoint& dst, 
+                            std::vector<std::shared_ptr<Character>>& characters) {
     for (shared_ptr<Character> curr_character : characters) {
         if (!(curr_character->getCoordinates() == dst)) {
             continue; 

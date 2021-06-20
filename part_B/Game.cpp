@@ -18,7 +18,7 @@ Game::Game(int height, int width) :
 }
 
 
-shared_ptr<Character> Game::getCharacterByCoordinates(const GridPoint& grid_point) {
+shared_ptr<Character> Game::getCharacterByCoordinates(const GridPoint& grid_point) const {
     for (shared_ptr<Character> curr_character : characters_vec) {
         if (curr_character->getCoordinates() == grid_point) {
             return curr_character; 
@@ -40,12 +40,13 @@ void Game::addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Chara
     grid[index_in_char_arr] = character->getTypeChar();
 }
 
-int Game::get1DIndexByCoordinates(const GridPoint& coordinates) {
+int Game::get1DIndexByCoordinates(const GridPoint& coordinates) const {
     return coordinates.row*width+coordinates.col;
 }
 
 
-shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team, units_t health, units_t ammo, units_t range, units_t power) {
+shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team, 
+                                    units_t health, units_t ammo, units_t range, units_t power) {
     if (health <= 0 || ammo < 0 || power < 0 || range < 0) {
         throw IllegalArgument();
     }
@@ -86,14 +87,14 @@ void Game::move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & d
     }
 }
 
-bool Game::legalCell(const mtm::GridPoint& grid_point){
+bool Game::legalCell(const mtm::GridPoint& grid_point) const {
     if (grid_point.row>=0 && grid_point.row<height && grid_point.col>=0 && grid_point.col<width) {
         return true;
     }
     return false; 
 }
 
-bool Game::cellOccupied(const mtm::GridPoint& grid_point){
+bool Game::cellOccupied(const mtm::GridPoint& grid_point) const {
     return getCharacterByCoordinates(grid_point)!=nullptr;
 }
 
@@ -157,7 +158,7 @@ void Game::attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint &
     }
     src_character->updateAmmo(dst_cell_content);
     src_character->updateTargetsHealth(dst_coordinates, characters_vec);
-    for (std::vector<shared_ptr<Character>>::iterator it = characters_vec.begin(); it!=characters_vec.end(); ) {
+    for (std::vector<shared_ptr<Character>>::iterator it = characters_vec.begin(); it!=characters_vec.end();) {
         if ((*it)->getHealth() <= 0) {
             grid[get1DIndexByCoordinates((*it)->getCoordinates())] = ' ';
             it = characters_vec.erase(it);
