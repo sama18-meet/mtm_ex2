@@ -5,8 +5,6 @@
 #include <iostream>
 #include <stdexcept>
 #include <algorithm> 
-using std::cout;
-using std::endl;
 
 
 template <class T>

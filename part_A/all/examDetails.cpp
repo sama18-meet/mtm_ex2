@@ -17,7 +17,6 @@
 #define HALF_HOUR "30"
 
 
-using std::cout;
 using std::endl;
 using std::string;
 using namespace mtm;
