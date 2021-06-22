@@ -3,6 +3,12 @@
 
 #include <exception>
 
+
+/**
+*  All exceptions used in the program. When input/ move/ attack is illegal according 
+*  to the game and character requirmenets and lows. 
+*/ 
+
 namespace mtm {
 
     class Exception: public std::exception {};
