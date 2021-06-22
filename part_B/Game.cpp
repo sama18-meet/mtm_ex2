@@ -18,15 +18,6 @@ Game::Game(int height, int width) :
 }
 
 
-shared_ptr<Character> Game::getCharacterByCoordinates(const GridPoint& grid_point) const {
-    for (shared_ptr<Character> curr_character : characters_vec) {
-        if (curr_character->getCoordinates() == grid_point) {
-            return curr_character; 
-        }
-    }
-    return nullptr;
-}
-
 void Game::addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Character> character) {
     if (!legalCell(coordinates)) {
         throw IllegalCell();
@@ -39,11 +30,6 @@ void Game::addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Chara
     int index_in_char_arr = get1DIndexByCoordinates(coordinates);
     grid[index_in_char_arr] = character->getTypeChar();
 }
-
-int Game::get1DIndexByCoordinates(const GridPoint& coordinates) const {
-    return coordinates.row*width+coordinates.col;
-}
-
 
 shared_ptr<Character> Game::makeCharacter(CharacterType type, Team team, 
                                     units_t health, units_t ammo, units_t range, units_t power) {
@@ -87,49 +73,6 @@ void Game::move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & d
     }
 }
 
-bool Game::legalCell(const mtm::GridPoint& grid_point) const {
-    if (grid_point.row>=0 && grid_point.row<height && grid_point.col>=0 && grid_point.col<width) {
-        return true;
-    }
-    return false; 
-}
-
-bool Game::cellOccupied(const mtm::GridPoint& grid_point) const {
-    return getCharacterByCoordinates(grid_point)!=nullptr;
-}
-
-void Game::reload(const mtm::GridPoint & coordinates){
-    if(!legalCell(coordinates)){
-        throw IllegalCell();
-    }
-    if(!cellOccupied(coordinates)){
-        throw CellEmpty();
-    }
-    getCharacterByCoordinates(coordinates)->reload();
-}
-
-
-
-bool Game::isOver(Team* winningTeam) const {
-    if (characters_vec.size()==0) {
-        return false;
-    }
-    Team first_character_team = (*(characters_vec.begin()))->getTeam();
-    for (shared_ptr<Character> curr_character : characters_vec) {
-        if(curr_character->getTeam() != first_character_team) {
-            return false;
-        }
-    } 
-    if (winningTeam != nullptr) {
-        *winningTeam = first_character_team;
-    }
-    return true;
-}
-
-std::ostream& operator<<(std::ostream& os, const Game& game){
-    printGameBoard(os, game.grid.c_str(), game.grid.c_str()+game.width*game.height, game.width);
-    return os;
-}
 
 void Game::attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates){
     if(!legalCell(src_coordinates) || !legalCell(dst_coordinates)) {
@@ -169,4 +112,57 @@ void Game::attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint &
     }
 }
 
+void Game::reload(const mtm::GridPoint & coordinates){
+    if(!legalCell(coordinates)){
+        throw IllegalCell();
+    }
+    if(!cellOccupied(coordinates)){
+        throw CellEmpty();
+    }
+    getCharacterByCoordinates(coordinates)->reload();
+}
 
+bool Game::isOver(Team* winningTeam) const {
+    if (characters_vec.size()==0) {
+        return false;
+    }
+    Team first_character_team = (*(characters_vec.begin()))->getTeam();
+    for (shared_ptr<Character> curr_character : characters_vec) {
+        if(curr_character->getTeam() != first_character_team) {
+            return false;
+        }
+    } 
+    if (winningTeam != nullptr) {
+        *winningTeam = first_character_team;
+    }
+    return true;
+}
+
+std::ostream& operator<<(std::ostream& os, const Game& game){
+    printGameBoard(os, game.grid.c_str(), game.grid.c_str()+game.width*game.height, game.width);
+    return os;
+}
+
+bool Game::legalCell(const mtm::GridPoint& grid_point) const {
+    if (grid_point.row>=0 && grid_point.row<height && grid_point.col>=0 && grid_point.col<width) {
+        return true;
+    }
+    return false; 
+}
+
+bool Game::cellOccupied(const mtm::GridPoint& grid_point) const {
+    return getCharacterByCoordinates(grid_point)!=nullptr;
+}
+
+int Game::get1DIndexByCoordinates(const GridPoint& coordinates) const {
+    return coordinates.row*width+coordinates.col;
+}
+
+shared_ptr<Character> Game::getCharacterByCoordinates(const GridPoint& grid_point) const {
+    for (shared_ptr<Character> curr_character : characters_vec) {
+        if (curr_character->getCoordinates() == grid_point) {
+            return curr_character; 
+        }
+    }
+    return nullptr;
+}
