@@ -17,6 +17,9 @@ Sniper::Sniper(Team team, units_t health, units_t ammo, units_t range, units_t p
     load_addition = SNIPER_LOAD_ADDITION;
 }
 
+bool Sniper::enoughAmmo(cell_content_t dst_team) const {
+    return ammo >= SNIPER_ATTACK_COST;
+}
 
 bool Sniper::attackInRange(const GridPoint& dst_grid_point) const {
     int distance = GridPoint::distance(coordinates, dst_grid_point);
@@ -25,11 +28,6 @@ bool Sniper::attackInRange(const GridPoint& dst_grid_point) const {
         return false;
     }
     return true;
-}
-
-
-bool Sniper::enoughAmmo(cell_content_t dst_team) const {
-    return ammo >= SNIPER_ATTACK_COST;
 }
 
 
