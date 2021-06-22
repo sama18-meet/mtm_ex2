@@ -16,6 +16,10 @@ Soldier::Soldier(Team team, units_t health, units_t ammo, units_t range, units_t
     load_addition = SOLDIER_LOAD_ADDITION;
 }
 
+bool Soldier::enoughAmmo(cell_content_t dst_team) const {
+    return ammo >= SOLDIER_ATTACK_COST;
+}
+
 bool Soldier::attackInRange(const GridPoint& dst_grid_point) const {
     if (GridPoint::distance(coordinates, dst_grid_point) > range) {
         return false;
@@ -23,9 +27,6 @@ bool Soldier::attackInRange(const GridPoint& dst_grid_point) const {
     return true;
 }
 
-bool Soldier::enoughAmmo(cell_content_t dst_team) const {
-    return ammo >= SOLDIER_ATTACK_COST;
-}
 
 bool Soldier::legalTarget(const GridPoint& dst_grid_point, cell_content_t dst_team) const {
     if (coordinates.row != dst_grid_point.row && coordinates.col != dst_grid_point.col) {
