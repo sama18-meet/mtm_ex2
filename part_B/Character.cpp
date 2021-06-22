@@ -5,6 +5,10 @@
 using std::shared_ptr;
 using namespace mtm;
 
+int Character::roundUpDivision(int numerator, int denominator) {
+    return (numerator%denominator == 0) ? numerator/denominator : numerator/denominator + 1;
+}
+
 Character::Character(Team team, units_t health, units_t ammo, units_t range, units_t power) : 
                     team(team), health(health), ammo(ammo), range(range), power(power),
                     coordinates(GridPoint(UNDEFINED,UNDEFINED)) {}
@@ -26,16 +30,15 @@ units_t Character::getPower() const {
     return this->power;
 }
 
-void Character::increaseHealth(units_t amount) {
-    health += amount; 
-}
-
 const GridPoint& Character::getCoordinates() const {
     return this->coordinates;
 }
 
 void Character::updateCoordinates(const GridPoint& grid_point) {
     coordinates = grid_point; 
+}
+void Character::increaseHealth(units_t amount) {
+    health += amount; 
 }
 
 bool Character::moveInRange(const GridPoint& dst) const {
@@ -49,6 +52,3 @@ void Character::reload(){
     ammo += this->load_addition;
 }
 
-int Character::roundUpDivision(int numerator, int denominator) {
-    return (numerator%denominator == 0) ? numerator/denominator : numerator/denominator + 1;
-}
